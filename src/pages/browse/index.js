@@ -9,7 +9,7 @@ const Browse = () => (
     <Title>Navegar</Title>
 
     <List>
-      <Playlist href="">
+      <Playlist to="/playlists/1">
         <img
           src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
           alt="Cover"
@@ -18,7 +18,7 @@ const Browse = () => (
         <p>Relaxe ao som de um bom e velho Rock.</p>
       </Playlist>
 
-      <Playlist href="">
+      <Playlist to="/playlists/1">
         <img
           src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
           alt="Cover"
@@ -27,7 +27,7 @@ const Browse = () => (
         <p>Relaxe ao som de um bom e velho Rock.</p>
       </Playlist>
 
-      <Playlist href="">
+      <Playlist to="/playlists/1">
         <img
           src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
           alt="Cover"
@@ -36,7 +36,7 @@ const Browse = () => (
         <p>Relaxe ao som de um bom e velho Rock.</p>
       </Playlist>
 
-      <Playlist href="">
+      <Playlist to="/playlists/1">
         <img
           src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
           alt="Cover"
