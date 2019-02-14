@@ -1,51 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import {
   Container, Title, List, Playlist,
 } from './styles';
 
-const Browse = () => (
-  <Container>
-    <Title>Navegar</Title>
+class Browse extends Component {
+  static propTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          title: PropTypes.string,
+          description: PropTypes.string,
+          thumbnail: PropTypes.string,
+        }),
+      ),
+    }).isRequired,
+  };
 
-    <List>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
-          alt="Cover"
-        />
-        <strong>Rock</strong>
-        <p>Relaxe ao som de um bom e velho Rock.</p>
-      </Playlist>
+  componentDidMount() {
+    this.props.getPlaylistsRequest();
+  }
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
-          alt="Cover"
-        />
-        <strong>Rock</strong>
-        <p>Relaxe ao som de um bom e velho Rock.</p>
-      </Playlist>
+  render() {
+    return (
+      <Container>
+        <Title>Navegar</Title>
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
-          alt="Cover"
-        />
-        <strong>Rock</strong>
-        <p>Relaxe ao som de um bom e velho Rock.</p>
-      </Playlist>
+        <List>
+          {this.props.playlists.data.map(playlist => (
+            <Playlist to={`/playlists/${playlist.id}`}>
+              <img src={playlist.thumbnail} alt={playlist.thumbnail} />
+              <strong>{playlist.title}</strong>
+              <p>{playlist.description}</p>
+            </Playlist>
+          ))}
+        </List>
+      </Container>
+    );
+  }
+}
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
-          alt="Cover"
-        />
-        <strong>Rock</strong>
-        <p>Relaxe ao som de um bom e velho Rock.</p>
-      </Playlist>
-    </List>
-  </Container>
-);
+const mapStateToProps = state => ({
+  playlists: state.playlists,
+});
 
-export default Browse;
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Browse);
