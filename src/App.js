@@ -6,6 +6,7 @@ import './config/reactotron';
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 import Player from './Components/Player';
+import ErrorBox from './Components/ErrorBox';
 import { Wrapper, Container, Content } from './styles/components';
 import store from './store';
 import Routes from './routes';
@@ -19,6 +20,7 @@ const App = () => (
           <Container>
             <Sidebar />
             <Content>
+              <ErrorBox />
               <Header />
               <Routes />
             </Content>
