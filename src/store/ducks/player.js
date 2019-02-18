@@ -28,7 +28,7 @@ export default function player(state = INITIAL_STATE, action) {
     case Types.PAUSE:
       return { ...state, status: Sound.status.PAUSED };
     case Types.NEXT: {
-      const currentIndex = state.list.findIndex(song => song.id == state.currentSong.id);
+      const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const next = state.list[currentIndex + 1];
 
       if (next) {
@@ -37,7 +37,7 @@ export default function player(state = INITIAL_STATE, action) {
       return state;
     }
     case Types.PREV: {
-      const currentIndex = state.list.findIndex(song => song.id == state.currentSong.id);
+      const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const prev = state.list[currentIndex - 1];
 
       if (prev) {

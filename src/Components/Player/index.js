@@ -22,7 +22,9 @@ const Player = ({
   player, play, pause, next, prev,
 }) => (
   <Container>
-    {!!player.currentSong && <Sound url={player.currentSong.file} playStatus={player.status} />}
+    {!!player.currentSong && (
+      <Sound url={player.currentSong.file} onFinishedPlaying={next} playStatus={player.status} />
+    )}
     <Current>
       {!!player.currentSong && (
         <Fragment>
