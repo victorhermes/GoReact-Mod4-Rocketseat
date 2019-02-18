@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Sound from 'react-sound';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Slider from 'rc-slider';
+import { Creators as PlayerActions } from '../../store/ducks/player';
 import {
   Container, Current, Volume, Progress, Controls, Time, ProgressSlider,
 } from './styles';
@@ -12,23 +14,26 @@ import VolumeIcon from '../../assets/images/volume.svg';
 import ShuffleIcon from '../../assets/images/shuffle.svg';
 import BackwardIcon from '../../assets/images/backward.svg';
 import PlayIcon from '../../assets/images/play.svg';
-/* import PauseIcon from '../../assets/images/pause.svg'; */
+import PauseIcon from '../../assets/images/pause.svg';
 import ForwardIcon from '../../assets/images/forward.svg';
 import RepeatIcon from '../../assets/images/repeat.svg';
 
-const Player = ({ player }) => (
+const Player = ({
+  player, play, pause, next, prev,
+}) => (
   <Container>
     {!!player.currentSong && <Sound url={player.currentSong.file} playStatus={player.status} />}
     <Current>
-      <img
-        src="https://img1-placeit-net.s3-accelerate.amazonaws.com/uploads/stage/stage_image/21976/large_thumb_stage.jpg"
-        alt="Cover"
-      />
+      {!!player.currentSong && (
+        <Fragment>
+          <img src={player.currentSong.thumbnail} alt={player.currentSong.title} />
 
-      <div>
-        <span>Times like these</span>
-        <small>Foo Fighters</small>
-      </div>
+          <div>
+            <span>{player.currentSong.title}</span>
+            <small>{player.currentSong.author}</small>
+          </div>
+        </Fragment>
+      )}
     </Current>
 
     <Progress>
@@ -36,13 +41,19 @@ const Player = ({ player }) => (
         <button type="submit">
           <img src={ShuffleIcon} alt="Shuffle" />
         </button>
-        <button type="submit">
+        <button onClick={prev} type="submit">
           <img src={BackwardIcon} alt="Back" />
         </button>
-        <button type="submit">
-          <img src={PlayIcon} alt="Play" />
-        </button>
-        <button type="submit">
+        {!!player.currentSong && player.status == Sound.status.PLAYING ? (
+          <button onClick={pause} type="submit">
+            <img src={PauseIcon} alt="Play" />
+          </button>
+        ) : (
+          <button onClick={play} type="submit">
+            <img src={PlayIcon} alt="Play" />
+          </button>
+        )}
+        <button onClick={next} type="submit">
           <img src={ForwardIcon} alt="Foward" />
         </button>
         <button type="submit">
@@ -79,13 +90,25 @@ Player.propTypes = {
   player: PropTypes.shape({
     currentSong: PropTypes.shape({
       file: PropTypes.string,
+      thumbnail: PropTypes.string,
+      author: PropTypes.string,
+      title: PropTypes.string,
     }),
     status: PropTypes.string,
   }).isRequired,
+  play: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   player: state.player,
 });
 
-export default connect(mapStateToProps)(Player);
+const mapDispatchToProps = dispatch => bindActionCreators(PlayerActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Player);
