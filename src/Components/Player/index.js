@@ -65,7 +65,7 @@ const Player = ({
         <button onClick={prev} type="submit">
           <img src={BackwardIcon} alt="Back" />
         </button>
-        {!!player.currentSong && player.status == Sound.status.PLAYING ? (
+        {!!player.currentSong && player.status === Sound.status.PLAYING ? (
           <button onClick={pause} type="submit">
             <img src={PauseIcon} alt="Play" />
           </button>

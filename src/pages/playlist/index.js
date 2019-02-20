@@ -62,12 +62,15 @@ class Playlist extends Component {
   loadPlaylistDetails = () => {
     const { match } = this.props;
     const { id } = match.params;
-
-    this.props.getplaylistDetailsRequest(id);
+    const { getplaylistDetailsRequest } = this.props;
+    getplaylistDetailsRequest(id);
   };
 
   renderPlaylist = () => {
     const { playlistDetails } = this.props;
+    const { selectedSong } = this.state;
+    const { currentSong } = this.props;
+    const { loadSong } = this.props;
 
     const playlist = playlistDetails.data;
 
@@ -112,9 +115,9 @@ músicas
                 <SongItem
                   key={song.id}
                   onClick={() => this.setState({ selectedSong: song.id })}
-                  onDoubleClick={() => this.props.loadSong(song, playlist.songs)}
-                  selected={this.state.selectedSong == song.id}
-                  playing={this.props.currentSong && this.props.currentSong.id == song.id}
+                  onDoubleClick={() => loadSong(song, playlist.songs)}
+                  selected={selectedSong === song.id}
+                  playing={currentSong && currentSong.id === song.id}
                 >
                   <td>
                     <img src={PlusIcon} alt="Adicionar" />
@@ -133,7 +136,8 @@ músicas
   };
 
   render() {
-    return this.props.playlistDetails.loading ? (
+    const { playlistDetails } = this.props;
+    return playlistDetails.loading ? (
       <Container loading>
         <Loading />
       </Container>

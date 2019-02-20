@@ -29,19 +29,22 @@ class Browse extends Component {
   };
 
   componentDidMount() {
-    this.props.getPlaylistsRequest();
+    const { getPlaylistsRequest } = this.props;
+    getPlaylistsRequest();
   }
 
   render() {
+    const { playlists } = this.props;
+
     return (
       <Container>
         <Title>
           Navegar
-          {this.props.playlists.loading && <Loading />}
+          {playlists.loading && <Loading />}
         </Title>
 
         <List>
-          {this.props.playlists.data.map(playlist => (
+          {playlists.data.map(playlist => (
             <Playlist to={`/playlists/${playlist.id}`}>
               <img src={playlist.thumbnail} alt={playlist.thumbnail} />
               <strong>{playlist.title}</strong>
