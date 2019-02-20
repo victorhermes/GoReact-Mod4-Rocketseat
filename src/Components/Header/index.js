@@ -9,7 +9,7 @@ const Header = () => (
 
     <User>
       <img src="https://avatars3.githubusercontent.com/u/25070025?v=4" alt="User" />
-      Victor Hermes
+      Victor H.
     </User>
   </Container>
 );
